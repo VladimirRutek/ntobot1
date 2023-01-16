@@ -44,7 +44,10 @@ class States(StatesGroup):
     otvet_1 = State()
     vopros2 = State()
     otvet_2 = State()
-
+    vopros3 = State()
+    otvet_3 = State()
+    vopros4 = State()
+    otvet_4 = State()
 
 bot = Bot(token="5819552530:AAHoHsDzP_QwETxdK1ICtbSnED0oCxLbNXA")
 dp = Dispatcher(bot, storage=storage)
@@ -157,16 +160,75 @@ async def test_GP(message: types.Message, state):
         await message.answer("Очень здорово!")
         await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEG_79jqGcjTip9LYNgya6jsvz_u_NWZwAC4x8AAimVQElccyotxFi3hiwE")
         await message.answer("продолжим?")
-        await States.vopros2.set()
+        await States.vopros3.set()
     else:
         await message.answer("Неправильно, но ничего страшного! Продолжай делать!")
         await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEG_7tjqGbA7ELPPJejrnRj0xvERdwRpgACkCQAAtAYSEl1lgatPhR9tiwE")
 
-#Конец второго вопроса
+#Третий вопрос
+
+
+@dp.message_handler(state=States.vopros3)
+async  def vopros1_3(message: types.Message, state):
+    await state.update_data(vopros3=message.text)
+    answer = await state.get_data()
+    value = answer["vopros3"].strip().lower()
+    if value == "да":
+        await message.answer("Третий вопрос\nС какого железнодорожного вокзала в центральном Лондоне уезжали учиться в Хогвартс юные волшебники?  \nВатерлоо  Чорливуд\nКингс-Кросс   Паддингтон ")
+        await States.otvet_3.set()
+    elif value == "нет":
+        await message.answer("потвердите")
+        await States.stets2.set()
+
+@dp.message_handler(state=States.otvet_3)
+async def test_GP(message: types.Message, state):
+    await state.update_data(otvet_3=message.text)
+    answer = await state.get_data()
+    value = answer["otvet_3"].strip().lower()
+    if value == "кингс-кросс":
+        await message.answer("Молодец! Двигайся дальше!")
+        await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEG_79jqGcjTip9LYNgya6jsvz_u_NWZwAC4x8AAimVQElccyotxFi3hiwE")
+        await message.answer("продолжим?")
+        await States.vopros2.set()
+    else:
+        await message.answer("Не расстраивайся, в следующий раз будет все правильно!")
+        await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEG_7tjqGbA7ELPPJejrnRj0xvERdwRpgACkCQAAtAYSEl1lgatPhR9tiwE")
+
+#Четвертый вопрос
+
+
+@dp.message_handler(state=States.vopros4)
+async  def vopros1_4(message: types.Message, state):
+    await state.update_data(vopros4=message.text)
+    answer = await state.get_data()
+    value = answer["vopros4"].strip().lower()
+    if value == "да":
+        await message.answer("Четвертый вопрос\nЧто хранилось в хранилище 687 в банке для волшебников-Гринготтс?  \nЗолото Гарри Поттера  Крестраж\nФилософский камень   Важные документы ")
+        await States.otvet_4.set()
+    elif value == "нет":
+        await message.answer("потвердите")
+        await States.stets2.set()
+
+@dp.message_handler(state=States.otvet_4)
+async def test_GP(message: types.Message, state):
+    await state.update_data(otvet_4=message.text)
+    answer = await state.get_data()
+    value = answer["otvet_4"].strip().lower()
+    if value == "Золото Гарри Поттера":
+        await message.answer("Молодец! Двигайся дальше!")
+        await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEG_79jqGcjTip9LYNgya6jsvz_u_NWZwAC4x8AAimVQElccyotxFi3hiwE")
+        await message.answer("продолжим?")
+        await States.vopros2.set()
+    else:
+        await message.answer("Не расстраивайся, в следующий раз будет все правильно!")
+        await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEG_7tjqGbA7ELPPJejrnRj0xvERdwRpgACkCQAAtAYSEl1lgatPhR9tiwE")
 
 
 
 
+
+
+#конец вопроса
 @dp.message_handler(state=States.fact_stet)
 async def fact(message: types.Message, state):
     await state.update_data(fact_stet=message.text)
