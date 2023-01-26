@@ -50,6 +50,9 @@ class States(StatesGroup):
     otvet_4 = State()
     vopros5 = State()
     otvet_5 = State()
+    vopros6 = State()
+    otvet_6 = State()
+
 
 bot = Bot(token="5819552530:AAHoHsDzP_QwETxdK1ICtbSnED0oCxLbNXA")
 dp = Dispatcher(bot, storage=storage)
@@ -234,26 +237,86 @@ async  def vopros1_5(message: types.Message, state):
     answer = await state.get_data()
     value = answer["vopros5"].strip().lower()
     if value == "да":
-        await message.answer("Четвертый вопрос\nЧто хранилось в хранилище 687 в банке для волшебников-Гринготтс?  \nЗолото Гарри Поттера  Крестраж\nФилософский камень   Важные документы ")
+        await message.answer("Пятый вопрос\nКто спросил почти безголового Ника о его кличке и непременно пожалел об этом?  \nГарри Поттер  Рональд Уизли\nГермиона Грейнджер   Полумна Лавгуд ")
         await States.otvet_5.set()
     elif value == "нет":
         await message.answer("потвердите")
-        await States.stets5.set()
+        await States.stets6.set()
 
-@dp.message_handler(state=States.otvet_4)
+@dp.message_handler(state=States.otvet_5)
 async def test_GP(message: types.Message, state):
-    await state.update_data(otvet_4=message.text)
+    await state.update_data(otvet_5=message.text)
     answer = await state.get_data()
-    value = answer["otvet_4"].strip().lower()
-    if value == "золото гарри поттера":
-        await message.answer("Beautiful!")
+    value = answer["otvet_5"].strip().lower()
+    if value == "гермиона грейнджер":
+        await message.answer("Все прекрасно!")
         await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEG_79jqGcjTip9LYNgya6jsvz_u_NWZwAC4x8AAimVQElccyotxFi3hiwE")
         await message.answer("продолжим?")
         await States.vopros5.set()
     else:
-        await message.answer("Неправильно, но не расстраивайся!")
+        await message.answer("В следующий раз будет все правильно!")
         await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEG_7tjqGbA7ELPPJejrnRj0xvERdwRpgACkCQAAtAYSEl1lgatPhR9tiwE")
 
+
+
+
+#Шестой вопрос
+
+
+@dp.message_handler(state=States.vopros5)
+async  def vopros1_6(message: types.Message, state):
+    await state.update_data(vopros5=message.text)
+    answer = await state.get_data()
+    value = answer["vopros5"].strip().lower()
+    if value == "да":
+        await message.answer("Пятый вопрос\nКто спросил почти безголового Ника о его кличке и непременно пожалел об этом?  \nГарри Поттер  Рональд Уизли\nГермиона Грейнджер   Полумна Лавгуд ")
+        await States.otvet_5.set()
+    elif value == "нет":
+        await message.answer("потвердите")
+        await States.stets6.set()
+
+@dp.message_handler(state=States.otvet_5)
+async def test_GP(message: types.Message, state):
+    await state.update_data(otvet_5=message.text)
+    answer = await state.get_data()
+    value = answer["otvet_5"].strip().lower()
+    if value == "гермиона грейнджер":
+        await message.answer("Все прекрасно!")
+        await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEG_79jqGcjTip9LYNgya6jsvz_u_NWZwAC4x8AAimVQElccyotxFi3hiwE")
+        await message.answer("продолжим?")
+        await States.vopros5.set()
+    else:
+        await message.answer("В следующий раз будет все правильно!")
+        await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEG_7tjqGbA7ELPPJejrnRj0xvERdwRpgACkCQAAtAYSEl1lgatPhR9tiwE")
+
+#Шестой вопрос
+
+
+@dp.message_handler(state=States.vopros5)
+async  def vopros1_5(message: types.Message, state):
+    await state.update_data(vopros5=message.text)
+    answer = await state.get_data()
+    value = answer["vopros5"].strip().lower()
+    if value == "да":
+        await message.answer("Пятый вопрос\nКто спросил почти безголового Ника о его кличке и непременно пожалел об этом?  \nГарри Поттер  Рональд Уизли\nГермиона Грейнджер   Полумна Лавгуд ")
+        await States.otvet_5.set()
+    elif value == "нет":
+        await message.answer("потвердите")
+        await States.stets6.set()
+
+@dp.message_handler(state=States.otvet_5)
+async def test_GP(message: types.Message, state):
+    await state.update_data(otvet_5=message.text)
+    answer = await state.get_data()
+    value = answer["otvet_5"].strip().lower()
+    if value == "гермиона грейнджер":
+        await message.answer("Все прекрасно!")
+        await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEG_79jqGcjTip9LYNgya6jsvz_u_NWZwAC4x8AAimVQElccyotxFi3hiwE")
+        await message.answer("продолжим?")
+        await States.vopros5.set()
+    else:
+        await message.answer("В следующий раз будет все правильно!")
+        await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEG_7tjqGbA7ELPPJejrnRj0xvERdwRpgACkCQAAtAYSEl1lgatPhR9tiwE")
 
 
 
